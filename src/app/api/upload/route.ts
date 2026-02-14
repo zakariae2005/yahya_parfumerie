@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-// app/api/upload/route.ts
-
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
-import { join } from 'path'
+import { v2 as cloudinary } from 'cloudinary'
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,8 +27,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate file size (e.g., max 5MB)
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
       return NextResponse.json(
         { error: 'File size must be less than 5MB' },
@@ -38,28 +40,24 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
 
-    // Generate unique filename
-    const timestamp = Date.now()
-    const originalName = file.name.replace(/\s+/g, '-')
-    const filename = `${timestamp}-${originalName}`
+    // Upload to Cloudinary
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: any = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: 'yahya-parfumerie/products',
+          resource_type: 'auto',
+        },
+        (error, result) => {
+          if (error) reject(error)
+          else resolve(result)
+        }
+      ).end(buffer)
+    })
 
-    // Save to public/uploads directory
-    const uploadDir = join(process.cwd(), 'public', 'uploads')
-    const filepath = join(uploadDir, filename)
-
-    // Create uploads directory if it doesn't exist
-    const fs = require('fs')
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true })
-    }
-
-    // Write file
-    await writeFile(filepath, buffer)
-
-    // Return the public URL
-    const url = `/uploads/${filename}`
-
-    return NextResponse.json({ url }, { status: 200 })
+    return NextResponse.json({ 
+      url: result.secure_url 
+    }, { status: 200 })
   } catch (error) {
     console.error('Error uploading file:', error)
     return NextResponse.json(
@@ -69,31 +67,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Optional: Add DELETE endpoint to remove uploaded images
 export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const filename = searchParams.get('filename')
+    const publicId = searchParams.get('publicId')
 
-    if (!filename) {
+    if (!publicId) {
       return NextResponse.json(
-        { error: 'Filename is required' },
+        { error: 'Public ID is required' },
         { status: 400 }
       )
     }
 
-    const filepath = join(process.cwd(), 'public', 'uploads', filename)
-    const fs = require('fs')
-
-    if (fs.existsSync(filepath)) {
-      fs.unlinkSync(filepath)
-      return NextResponse.json({ message: 'File deleted successfully' })
-    }
-
-    return NextResponse.json(
-      { error: 'File not found' },
-      { status: 404 }
-    )
+    await cloudinary.uploader.destroy(publicId)
+    
+    return NextResponse.json({ 
+      message: 'File deleted successfully' 
+    })
   } catch (error) {
     console.error('Error deleting file:', error)
     return NextResponse.json(
