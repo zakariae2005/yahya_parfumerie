@@ -1,0 +1,22 @@
+-- CreateTable
+CREATE TABLE "Product" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "brand" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "description" TEXT NOT NULL,
+    "category" TEXT NOT NULL,
+    "images" TEXT[],
+    "rating" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "reviews" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE INDEX "Product_category_idx" ON "Product"("category");
+
+-- CreateIndex
+CREATE INDEX "Product_brand_idx" ON "Product"("brand");
