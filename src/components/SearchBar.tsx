@@ -102,7 +102,7 @@ export function SearchBar() {
         <div className="absolute top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
           {isLoading ? (
             <div className="p-4 text-center text-sm text-muted-foreground">
-              {t('loading') || 'Chargement...'}
+              Chargement...
             </div>
           ) : suggestions.length > 0 ? (
             <ul>
@@ -148,7 +148,7 @@ export function SearchBar() {
             </ul>
           ) : (
             <div className="p-4 text-center text-sm text-muted-foreground">
-              {t('no_results') || 'Aucun résultat trouvé'}
+              'Aucun résultat trouvé
             </div>
           )}
         </div>
