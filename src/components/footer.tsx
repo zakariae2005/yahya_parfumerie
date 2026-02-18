@@ -37,7 +37,6 @@ export function Footer() {
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Add newsletter signup logic here
     console.log('Newsletter signup:', email)
     setEmail('')
   }
@@ -45,23 +44,21 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-background border-t border-border overflow-hidden"
+      className="relative w-full bg-black border-t border-white/10 overflow-hidden"
     >
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16 relative z-10">
         {/* Logo Section */}
         <div
           className={`text-center mb-12 transition-all duration-1000 ease-out ${
-            isVisible
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-8'
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           <Link href="/" className="inline-block">
-            <div className="text-4xl md:text-5xl font-serif font-semibold text-foreground tracking-widest">
+            <div className="text-4xl md:text-5xl font-serif font-semibold text-white tracking-widest">
               YAHYA
             </div>
             <div className="text-sm text-accent font-light tracking-[0.3em]">
@@ -75,46 +72,44 @@ export function Footer() {
           {/* SERVICE CLIENT */}
           <div
             className={`transition-all duration-1000 ease-out ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
             style={{ transitionDelay: '100ms' }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
               Service Client
             </h3>
             <div className="space-y-4">
               <a
                 href="tel:+212535401149"
-                className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors duration-300 group"
+                className="flex items-center gap-3 text-white/50 hover:text-accent transition-colors duration-300 group"
               >
                 <Phone className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm">+212 5 35 40 11 49</span>
               </a>
               <a
                 href="tel:+212623159261"
-                className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors duration-300 group"
+                className="flex items-center gap-3 text-white/50 hover:text-accent transition-colors duration-300 group"
               >
                 <Phone className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm">+212 6 23 15 92 61</span>
               </a>
               <a
                 href="mailto:Yahya79@gmail.com"
-                className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors duration-300 group"
+                className="flex items-center gap-3 text-white/50 hover:text-accent transition-colors duration-300 group"
               >
                 <Mail className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm break-all">Yahya79@gmail.com</span>
               </a>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex items-center gap-3 text-white/50">
                 <Clock className="w-4 h-4" />
                 <span className="text-sm">7j / 7j</span>
               </div>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex items-center gap-3 text-white/50">
                 <Clock className="w-4 h-4" />
                 <span className="text-sm">10h00 - 22h30</span>
               </div>
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <div className="flex items-center gap-3 text-white/50">
                 <MapPin className="w-4 h-4" />
                 <span className="text-sm">MEKNES - Maroc</span>
               </div>
@@ -124,13 +119,11 @@ export function Footer() {
           {/* MENU */}
           <div
             className={`transition-all duration-1000 ease-out ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
             style={{ transitionDelay: '200ms' }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
               Menu
             </h3>
             <ul className="space-y-3">
@@ -145,7 +138,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 inline-block hover:translate-x-1 transform"
+                    className="text-sm text-white/50 hover:text-accent transition-colors duration-300 inline-block hover:translate-x-1 transform"
                   >
                     {item.label}
                   </Link>
@@ -157,13 +150,11 @@ export function Footer() {
           {/* PAGES LÉGALES */}
           <div
             className={`transition-all duration-1000 ease-out ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
             style={{ transitionDelay: '300ms' }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
               Pages Légales
             </h3>
             <ul className="space-y-3">
@@ -175,7 +166,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 inline-block hover:translate-x-1 transform"
+                    className="text-sm text-white/50 hover:text-accent transition-colors duration-300 inline-block hover:translate-x-1 transform"
                   >
                     {item.label}
                   </Link>
@@ -187,13 +178,11 @@ export function Footer() {
           {/* SUIVEZ-NOUS */}
           <div
             className={`transition-all duration-1000 ease-out ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
             style={{ transitionDelay: '400ms' }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
               Suivez-nous
             </h3>
             <div className="space-y-4">
@@ -201,7 +190,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-all duration-300 group"
+                className="flex items-center gap-3 text-white/50 hover:text-accent transition-all duration-300 group"
               >
                 <Facebook className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm">Facebook</span>
@@ -210,7 +199,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-all duration-300 group"
+                className="flex items-center gap-3 text-white/50 hover:text-accent transition-all duration-300 group"
               >
                 <Instagram className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-sm">Instagram</span>
@@ -219,7 +208,7 @@ export function Footer() {
                 href="https://tiktok.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-all duration-300 group"
+                className="flex items-center gap-3 text-white/50 hover:text-accent transition-all duration-300 group"
               >
                 <svg
                   className="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
@@ -236,16 +225,14 @@ export function Footer() {
           {/* NEWSLETTER */}
           <div
             className={`transition-all duration-1000 ease-out ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-12'
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
             style={{ transitionDelay: '500ms' }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
               Inscrivez-vous sur notre newsletter
             </h3>
-            <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-sm text-white/50 mb-6 leading-relaxed">
               Soyez les premiers à découvrir nos dernières nouveautés et offres exclusives directement dans votre boîte mail !
             </p>
             <form onSubmit={handleNewsletterSubmit} className="space-y-4">
@@ -255,7 +242,7 @@ export function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-background/50 border-border focus:border-accent transition-colors duration-300"
+                className="bg-white/5 border-white/20 text-white placeholder:text-white/30 focus:border-accent transition-colors duration-300"
               />
               <Button
                 type="submit"
@@ -271,7 +258,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent flex items-center justify-center text-foreground hover:text-accent-foreground transition-all duration-300 hover:scale-110"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent flex items-center justify-center text-white hover:text-accent-foreground transition-all duration-300 hover:scale-110"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -279,7 +266,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent flex items-center justify-center text-foreground hover:text-accent-foreground transition-all duration-300 hover:scale-110"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent flex items-center justify-center text-white hover:text-accent-foreground transition-all duration-300 hover:scale-110"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -287,7 +274,7 @@ export function Footer() {
                 href="https://tiktok.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-primary/10 hover:bg-accent flex items-center justify-center text-foreground hover:text-accent-foreground transition-all duration-300 hover:scale-110"
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-accent flex items-center justify-center text-white hover:text-accent-foreground transition-all duration-300 hover:scale-110"
               >
                 <svg
                   className="w-5 h-5"
@@ -303,14 +290,12 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div
-          className={`border-t border-border pt-8 text-center transition-all duration-1000 ease-out ${
-            isVisible
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-8'
+          className={`border-t border-white/10 pt-8 text-center transition-all duration-1000 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
           style={{ transitionDelay: '600ms' }}
         >
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white/50">
             © 2026,{' '}
             <Link
               href="/"

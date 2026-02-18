@@ -1,5 +1,3 @@
-// types/product.ts
-
 export interface Product {
   id: string
   name: string
@@ -7,7 +5,8 @@ export interface Product {
   price: number
   description?: string
   category?: string
-  subcategory?: string // Add this
+  subcategory?: string
+  megacategory?: string  // ← new
   images: string[]
   rating: number
   reviews: number
@@ -21,7 +20,8 @@ export interface CreateProductInput {
   price: number
   description?: string
   category?: string
-  subcategory?: string // Add this
+  subcategory?: string
+  megacategory?: string  // ← new
   images?: string[]
   rating?: number
   reviews?: number
@@ -33,7 +33,8 @@ export interface UpdateProductInput {
   price?: number
   description?: string
   category?: string
-  subcategory?: string // Add this
+  subcategory?: string
+  megacategory?: string  // ← new
   images?: string[]
   rating?: number
   reviews?: number
@@ -41,7 +42,8 @@ export interface UpdateProductInput {
 
 export interface ProductFilters {
   category?: string
-  subcategory?: string // Add this
+  subcategory?: string
+  megacategory?: string  // ← new
   brand?: string
   minPrice?: number
   maxPrice?: number

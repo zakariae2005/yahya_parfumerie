@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/language-context'
 
@@ -10,37 +9,30 @@ export function HeroSection() {
   const { t } = useLanguage()
   const [currentImage, setCurrentImage] = useState(0)
 
-  // Array of background images
   const images = [
-    '/images/hero1.jpeg', // Replace with your actual image paths
+    '/images/hero1.jpeg',
     '/images/hero2.jpeg',
     '/images/hero3.jpeg',
   ]
 
   useEffect(() => {
-    // Auto-advance slides every 5 seconds
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length)
     }, 5000)
-
     return () => clearInterval(interval)
   }, [images.length])
 
   return (
-    <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden flex items-center justify-center">
-      {/* Background Images with Smooth Transitions */}
+    <section className="relative w-full h-[500px] md:h-[700px] overflow-hidden flex items-center justify-center">
+      {/* Background Images */}
       <div className="absolute inset-0 -z-20">
         {images.map((image, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-              index === currentImage
-                ? 'opacity-100 scale-100'
-                : 'opacity-0 scale-105'
+              index === currentImage ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             }`}
-            style={{
-              transitionProperty: 'opacity, transform',
-            }}
+            style={{ transitionProperty: 'opacity, transform' }}
           >
             <Image
               src={image}
@@ -53,49 +45,42 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* Dark Overlay with Animated Opacity */}
-      <div 
-        className="absolute inset-0 bg-black/40 -z-10 transition-opacity duration-1000"
-        key={currentImage}
-      />
+      {/* Dark Overlay — matching the black header/footer */}
+      <div className="absolute inset-0 bg-black/60 -z-10 transition-opacity duration-1000" key={currentImage} />
 
-      {/* Decorative Elements with Pulse Animation */}
-      <div 
-        className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDuration: '4s' }}
-      />
-      <div 
-        className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow"
-        style={{ animationDuration: '4s', animationDelay: '2s' }}
-      />
-
-      {/* Content with Fade-in Animation */}
+      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 text-center text-white relative z-10">
-        <h1 
+        {/* Eyebrow label — same style as FeaturedProducts subtitle */}
+        <p
+          className="text-xs uppercase tracking-[0.4em] text-white/50 mb-4 animate-fade-in-up"
+          key={`label-${currentImage}`}
+        >
+          Parfumerie Yahya
+        </p>
+
+        {/* Thin decorative divider — same as FeaturedProducts */}
+        <div className="w-16 h-px bg-white/30 mx-auto mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }} />
+
+        <h1
           className="text-5xl md:text-6xl lg:text-7xl font-serif font-semibold mb-6 text-balance animate-fade-in-up"
           key={`title-${currentImage}`}
         >
           Beauté de Luxe
         </h1>
 
-        <p 
-          className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-balance text-white/90 animate-fade-in-up"
+        <p
+          className="text-sm md:text-base mb-10 max-w-xl mx-auto text-white/60 tracking-wide animate-fade-in-up"
           style={{ animationDelay: '0.2s' }}
         >
           Découvrez notre collection exclusive de cosmétiques premium des plus grandes marques du monde
         </p>
 
-        <div 
-          className="animate-fade-in-up"
-          style={{ animationDelay: '0.4s' }}
-        >
+        {/* CTA — same style as FeaturedProducts "View all" button */}
+        <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <Link href="/products">
-            <Button 
-              size="lg" 
-              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
-            >
+            <button className="border border-white text-white hover:bg-white hover:text-black transition-all duration-300 uppercase tracking-widest text-xs px-10 py-3">
               {t('explorer')}
-            </Button>
+            </button>
           </Link>
         </div>
       </div>
@@ -106,10 +91,10 @@ export function HeroSection() {
           <button
             key={index}
             onClick={() => setCurrentImage(index)}
-            className={`transition-all duration-500 rounded-full ${
+            className={`transition-all duration-500 ${
               index === currentImage
-                ? 'w-12 h-2 bg-accent'
-                : 'w-2 h-2 bg-white/50 hover:bg-white/75'
+                ? 'w-12 h-px bg-white'
+                : 'w-4 h-px bg-white/30 hover:bg-white/60'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
@@ -121,7 +106,7 @@ export function HeroSection() {
         @keyframes fade-in-up {
           from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
@@ -129,24 +114,9 @@ export function HeroSection() {
           }
         }
 
-        @keyframes pulse-slow {
-          0%, 100% {
-            opacity: 0.1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.15;
-            transform: scale(1.05);
-          }
-        }
-
         .animate-fade-in-up {
           animation: fade-in-up 0.8s ease-out forwards;
           opacity: 0;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 4s ease-in-out infinite;
         }
       `}</style>
     </section>

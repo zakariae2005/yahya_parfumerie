@@ -34,19 +34,22 @@ export const SUBCATEGORIES: Record<string, string[]> = {
 }
 
 export const BRANDS = [
-  'Dior',
-  'Chanel',
-  "L'Oréal",
-  'Estée Lauder',
-  'MAC',
-  'Lancôme',
-  'Clinique',
-  'Urban Decay',
-  'Bobbi Brown',
-  'SK-II',
-  'Shiseido',
-  'NARS'
-]
+  "Hugo Boss",
+  "Dior",
+  "Dolce & Gabbana",
+  "Elie Saab",
+  "Giorgio Armani",
+  "Givenchy",
+  "Hermès",
+  "Jean Paul Gaultier",
+  "Lancôme",
+  "Valentino",
+  "Yves Saint Laurent",
+  "Saphir",
+  "Montblanc",
+  "Prada",
+];
+
 
 // Sample products
 export const products: Product[] = [

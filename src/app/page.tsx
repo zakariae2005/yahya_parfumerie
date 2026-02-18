@@ -1,7 +1,6 @@
 import { HeroSection } from '@/components/hero-section'
 import { FeaturedProducts } from '@/components/featured-products'
 import { SplitBanner } from '@/components/split-banner'
-import { CategoryTiles } from '@/components/category-tiles'
 import { ReviewsCarousel } from '@/components/reviews-carousel'
 import { FeaturedSection } from '@/components/FeaturedSection'
 import { CategoriesSection } from '@/components/CategoriesSection'
@@ -14,7 +13,6 @@ export default function Home() {
       <FeaturedProducts />
       <SpecialOffers />
       <SplitBanner />
-      <CategoryTiles />
       <FeaturedSection />
       <CategoriesSection />
       <ReviewsCarousel />

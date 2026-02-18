@@ -14,20 +14,22 @@ datasource db {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  brand       String?
-  price       Float
-  description String?  @db.Text
-  category    String?
-  subcategory String?  // Add this new field
-  images      String[] @default([])
-  rating      Float    @default(0)
-  reviews     Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  brand        String?
+  price        Float
+  description  String?  @db.Text
+  category     String?
+  subcategory  String?
+  megacategory String?  // ← new field
+  images       String[] @default([])
+  rating       Float    @default(0)
+  reviews      Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([category])
   @@index([subcategory])
+  @@index([megacategory])
   @@index([brand])
 }

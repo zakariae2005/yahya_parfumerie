@@ -26,19 +26,26 @@ export const useProductStore = create<ProductStore>((set, get) => ({
   filters: {},
 
   fetchProducts: async () => {
-    set({ loading: true, error: null })
-    try {
-      const response = await fetch('/api/products')
-      if (!response.ok) throw new Error('Failed to fetch products')
-      const data = await response.json()
-      set({ products: data, loading: false })
-    } catch (error) {
-      set({ 
-        error: error instanceof Error ? error.message : 'An error occurred',
-        loading: false 
-      })
-    }
-  },
+  set({ loading: true, error: null })
+  try {
+    const { filters } = get()
+    const params = new URLSearchParams()
+    if (filters.category)     params.set('category',     filters.category)
+    if (filters.subcategory)  params.set('subcategory',  filters.subcategory)
+    if (filters.megacategory) params.set('megacategory', filters.megacategory) // ← new
+    if (filters.brand)        params.set('brand',        filters.brand)
+    if (filters.minPrice)     params.set('minPrice',     String(filters.minPrice))
+    if (filters.maxPrice)     params.set('maxPrice',     String(filters.maxPrice))
+    if (filters.searchTerm)   params.set('searchTerm',   filters.searchTerm)
+
+    const response = await fetch(`/api/products?${params.toString()}`)
+    if (!response.ok) throw new Error('Failed to fetch products')
+    const data = await response.json()
+    set({ products: data, loading: false })
+  } catch (error) {
+    set({ error: error instanceof Error ? error.message : 'An error occurred', loading: false })
+  }
+},
 
   fetchProductById: async (id: string) => {
     set({ loading: true, error: null })
