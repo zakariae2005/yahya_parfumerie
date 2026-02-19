@@ -3,8 +3,7 @@
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Heart, ShoppingCart, Share2, ChevronLeft, Star, Check } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { ShoppingCart, Share2, ChevronLeft, Star, Check, Plus, Minus } from 'lucide-react'
 import { useLanguage } from '@/lib/language-context'
 import { useProductStore } from '@/store/productStore'
 import { useCartStore } from '@/store/cartStore'
@@ -32,14 +31,11 @@ export default function ProductDetailPage({ params }: PageProps) {
       setProduct(productData)
       setLoading(false)
     }
-
     loadProduct()
   }, [resolvedParams.id, fetchProductById])
 
   useEffect(() => {
-    if (products.length === 0) {
-      fetchProducts()
-    }
+    if (products.length === 0) fetchProducts()
   }, [products.length, fetchProducts])
 
   const handleAddToCart = () => {
@@ -53,27 +49,27 @@ export default function ProductDetailPage({ params }: PageProps) {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+      <div className="min-h-screen bg-[#f5f5f3]">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
           <div className="animate-pulse">
-            <div className="h-4 bg-muted rounded w-32 mb-6" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="h-3 bg-black/5 w-32 mb-10" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
-                <div className="h-96 md:h-[500px] bg-muted rounded-xl mb-4" />
+                <div className="h-96 md:h-[500px] bg-black/5 mb-3" />
                 <div className="grid grid-cols-4 gap-2">
                   {[...Array(4)].map((_, i) => (
-                    <div key={i} className="h-24 bg-muted rounded-lg" />
+                    <div key={i} className="h-24 bg-black/5" />
                   ))}
                 </div>
               </div>
               <div className="space-y-4">
-                <div className="h-4 bg-muted rounded w-24" />
-                <div className="h-12 bg-muted rounded w-3/4" />
-                <div className="h-6 bg-muted rounded w-32" />
-                <div className="h-8 bg-muted rounded w-24" />
-                <div className="h-20 bg-muted rounded" />
-                <div className="h-12 bg-muted rounded w-32" />
-                <div className="h-12 bg-muted rounded" />
+                <div className="h-3 bg-black/5 w-24" />
+                <div className="h-10 bg-black/5 w-3/4" />
+                <div className="h-4 bg-black/5 w-32" />
+                <div className="h-8 bg-black/5 w-24" />
+                <div className="h-20 bg-black/5" />
+                <div className="h-10 bg-black/5 w-32" />
+                <div className="h-12 bg-black/5" />
               </div>
             </div>
           </div>
@@ -82,14 +78,17 @@ export default function ProductDetailPage({ params }: PageProps) {
     )
   }
 
+  // Not found
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-serif font-semibold mb-2">Produit non trouvé</h1>
-          <p className="text-muted-foreground mb-4">Ce produit n&apos;existe pas ou a été supprimé.</p>
+      <div className="min-h-screen bg-[#f5f5f3] flex items-center justify-center">
+        <div className="text-center bg-white border border-black/8 p-16">
+          <h1 className="text-2xl font-serif text-black mb-3">Produit non trouvé</h1>
+          <p className="text-xs uppercase tracking-[0.2em] text-black/40 mb-8">Ce produit n&apos;existe pas ou a été supprimé.</p>
           <Link href="/products">
-            <Button>Retour aux produits</Button>
+            <button className="border border-black text-black hover:bg-black hover:text-white transition-all duration-300 uppercase tracking-widest text-xs px-8 py-3">
+              Retour aux produits
+            </button>
           </Link>
         </div>
       </div>
@@ -101,17 +100,24 @@ export default function ProductDetailPage({ params }: PageProps) {
     .slice(0, 4)
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        <Link href="/products" className="flex items-center gap-2 text-sm text-muted-foreground mb-6 hover:text-foreground transition-colors">
-          <ChevronLeft size={16} />
+    <div className="min-h-screen bg-[#f5f5f3]">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
+
+        {/* Breadcrumb */}
+        <Link
+          href="/products"
+          className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-black/40 hover:text-black transition-colors duration-200 mb-10"
+        >
+          <ChevronLeft size={14} />
           Retour aux produits
         </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        {/* Main Product Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+
           {/* Image Gallery */}
           <div>
-            <div className="h-96 md:h-[500px] rounded-xl mb-4 relative overflow-hidden bg-muted">
+            <div className="relative h-96 md:h-[520px] overflow-hidden bg-white border border-black/8 mb-3">
               {product.images && product.images.length > 0 ? (
                 <Image
                   src={product.images[selectedImage] || product.images[0]}
@@ -122,24 +128,20 @@ export default function ProductDetailPage({ params }: PageProps) {
                   priority
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
-                  <span className="text-muted-foreground">Pas d&apos;image</span>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-xs text-black/20 italic">Pas d&apos;image</span>
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/5" />
-              <button className="absolute top-4 right-4 p-3 bg-white/90 hover:bg-white rounded-lg transition-all">
-                <Heart size={20} className="text-accent" />
-              </button>
             </div>
-            
+
             {product.images && product.images.length > 1 && (
               <div className="grid grid-cols-4 gap-2">
                 {product.images.slice(0, 4).map((image, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImage(idx)}
-                    className={`h-24 rounded-lg border-2 transition-colors relative overflow-hidden bg-muted ${
-                      selectedImage === idx ? 'border-accent' : 'border-border'
+                    className={`h-24 relative overflow-hidden border-2 transition-colors duration-200 ${
+                      selectedImage === idx ? 'border-black' : 'border-black/10 hover:border-black/30'
                     }`}
                   >
                     <Image
@@ -158,115 +160,121 @@ export default function ProductDetailPage({ params }: PageProps) {
           {/* Product Info */}
           <div className="flex flex-col justify-center">
             {product.brand && (
-              <p className="text-xs text-muted-foreground font-medium mb-2">{product.brand}</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-3">{product.brand}</p>
             )}
-            <h1 className="text-4xl md:text-5xl font-serif font-semibold mb-4">
+
+            <h1 className="text-3xl md:text-4xl font-serif text-black mb-4 leading-tight">
               {product.name}
             </h1>
 
+            {/* Stars */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    size={18}
-                    className={
-                      i < Math.floor(product.rating)
-                        ? 'fill-accent text-accent'
-                        : 'text-muted-foreground'
-                    }
+                    size={14}
+                    className={i < Math.floor(product.rating) ? 'fill-black/70 text-black/70' : 'text-black/15'}
                   />
                 ))}
               </div>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs text-black/40 tracking-wide">
                 {product.rating.toFixed(1)} ({product.reviews} avis)
               </span>
             </div>
 
-            <p className="text-3xl font-semibold text-accent mb-6">
-              {product.price.toFixed(2)} DH
+            {/* Thin divider */}
+            <div className="w-16 h-px bg-black mb-6" />
+
+            {/* Price */}
+            <p className="text-3xl font-serif font-semibold text-black mb-6 tracking-wide">
+              {product.price.toFixed(2)} <span className="text-base font-normal text-black/40">DH</span>
             </p>
 
             {product.description && (
-              <p className="text-muted-foreground leading-relaxed mb-8">
+              <p className="text-sm text-black/50 leading-relaxed mb-8 tracking-wide">
                 {product.description}
               </p>
             )}
 
+            {/* Quantity */}
             <div className="mb-6">
-              <label className="block text-sm font-medium mb-2">Quantité</label>
-              <div className="flex items-center gap-4 bg-primary rounded-lg w-fit px-4 py-2">
+              <label className="block text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Quantité</label>
+              <div className="flex items-center border border-black/20 w-fit">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="text-lg font-semibold hover:opacity-60"
+                  className="px-4 py-3 hover:bg-black hover:text-white transition-colors duration-200"
                 >
-                  −
+                  <Minus size={14} />
                 </button>
-                <span className="w-8 text-center">{quantity}</span>
+                <span className="w-12 text-center text-sm font-medium text-black border-x border-black/20 py-3">
+                  {quantity}
+                </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="text-lg font-semibold hover:opacity-60"
+                  className="px-4 py-3 hover:bg-black hover:text-white transition-colors duration-200"
                 >
-                  +
+                  <Plus size={14} />
                 </button>
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex gap-3 mb-8">
-              <Button 
-                size="lg" 
+              <button
                 onClick={handleAddToCart}
-                className={`flex-1 font-semibold transition-colors ${
-                  isAdded 
-                    ? 'bg-green-600 hover:bg-green-700' 
-                    : 'bg-accent hover:bg-accent/90'
-                } text-accent-foreground`}
+                className={`flex-1 py-3 text-xs uppercase tracking-widest font-medium flex items-center justify-center gap-2 transition-all duration-300 ${
+                  isAdded
+                    ? 'bg-black text-white'
+                    : 'border border-black text-black hover:bg-black hover:text-white'
+                }`}
               >
                 {isAdded ? (
                   <>
-                    <Check size={20} className="mr-2" />
+                    <Check size={14} />
                     Ajouté au panier
                   </>
                 ) : (
                   <>
-                    <ShoppingCart size={20} className="mr-2" />
+                    <ShoppingCart size={14} />
                     {t('addToCart')}
                   </>
                 )}
-              </Button>
-              <Button size="lg" variant="outline">
-                <Share2 size={20} />
-              </Button>
+              </button>
+              <button className="border border-black/20 text-black/40 hover:border-black hover:text-black transition-all duration-300 px-4">
+                <Share2 size={16} />
+              </button>
             </div>
 
-            <div className="border-t border-border pt-6">
-              <h3 className="font-serif font-semibold mb-4">Détails du produit</h3>
-              <ul className="space-y-3 text-sm">
+            {/* Product Details */}
+            <div className="border-t border-black/10 pt-6">
+              <h3 className="text-xs uppercase tracking-[0.2em] text-black/40 mb-4">Détails du produit</h3>
+              <ul className="space-y-3">
                 {product.category && (
-                  <li className="flex justify-between">
-                    <span className="text-muted-foreground">Catégorie:</span>
-                    <span className="font-medium capitalize">{product.category}</span>
+                  <li className="flex justify-between items-center">
+                    <span className="text-xs uppercase tracking-[0.15em] text-black/40">Catégorie</span>
+                    <span className="text-xs font-medium text-black uppercase tracking-wider">{product.category}</span>
                   </li>
                 )}
                 {product.subcategory && (
-                  <li className="flex justify-between">
-                    <span className="text-muted-foreground">Sous-catégorie:</span>
-                    <span className="font-medium capitalize">{product.subcategory}</span>
+                  <li className="flex justify-between items-center">
+                    <span className="text-xs uppercase tracking-[0.15em] text-black/40">Sous-catégorie</span>
+                    <span className="text-xs font-medium text-black">{product.subcategory}</span>
                   </li>
                 )}
                 {product.brand && (
-                  <li className="flex justify-between">
-                    <span className="text-muted-foreground">Marque:</span>
-                    <span className="font-medium">{product.brand}</span>
+                  <li className="flex justify-between items-center">
+                    <span className="text-xs uppercase tracking-[0.15em] text-black/40">Marque</span>
+                    <span className="text-xs font-medium text-black">{product.brand}</span>
                   </li>
                 )}
-                <li className="flex justify-between">
-                  <span className="text-muted-foreground">Prix:</span>
-                  <span className="font-medium">{product.price.toFixed(2)} DH</span>
+                <li className="flex justify-between items-center">
+                  <span className="text-xs uppercase tracking-[0.15em] text-black/40">Prix</span>
+                  <span className="text-xs font-medium text-black">{product.price.toFixed(2)} DH</span>
                 </li>
-                <li className="flex justify-between">
-                  <span className="text-muted-foreground">Note moyenne:</span>
-                  <span className="font-medium">{product.rating.toFixed(1)}/5</span>
+                <li className="flex justify-between items-center">
+                  <span className="text-xs uppercase tracking-[0.15em] text-black/40">Note moyenne</span>
+                  <span className="text-xs font-medium text-black">{product.rating.toFixed(1)}/5</span>
                 </li>
               </ul>
             </div>
@@ -275,76 +283,52 @@ export default function ProductDetailPage({ params }: PageProps) {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div>
-            <h2 className="text-3xl font-serif font-semibold mb-8">Produits similaires</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="border-t border-black/10 pt-16 mb-20">
+            <div className="mb-10">
+              <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-2">Vous aimerez aussi</p>
+              <h2 className="text-3xl font-serif text-black">Produits similaires</h2>
+              <div className="w-16 h-px bg-black mt-6" />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {relatedProducts.map((relProduct) => (
                 <Link key={relProduct.id} href={`/products/${relProduct.id}`}>
-                  <div className="group bg-card rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
-                    <div className="h-48 md:h-56 relative overflow-hidden bg-muted">
+                  <div className="group bg-white border border-black/8 hover:border-black/20 hover:shadow-md transition-all duration-300">
+                    <div className="h-48 md:h-56 relative overflow-hidden bg-[#f5f5f3]">
                       {relProduct.images && relProduct.images.length > 0 ? (
                         <Image
                           src={relProduct.images[0]}
                           alt={relProduct.name}
                           fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, 25vw"
                         />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-accent/20">
-                          <span className="text-muted-foreground text-sm">Pas d&apos;image</span>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-xs text-black/20 italic">Pas d&apos;image</span>
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/5" />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault()
-                        }}
-                        className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white rounded-lg transition-all opacity-0 group-hover:opacity-100"
-                      >
-                        <Heart size={18} className="text-accent" />
-                      </button>
                     </div>
-
                     <div className="p-4">
                       {relProduct.brand && (
-                        <p className="text-xs text-muted-foreground mb-1 font-medium">
-                          {relProduct.brand}
-                        </p>
+                        <p className="text-xs uppercase tracking-[0.15em] text-black/40 mb-1">{relProduct.brand}</p>
                       )}
-                      <h3 className="font-serif font-semibold text-base mb-2 line-clamp-2">
+                      <h3 className="font-medium text-black text-sm mb-2 line-clamp-2 leading-relaxed">
                         {relProduct.name}
                       </h3>
-                      <p className="text-lg font-semibold text-accent mb-3">
-                        {relProduct.price.toFixed(2)} DH
+                      <div className="w-6 h-px bg-black/20 mb-2" />
+                      <p className="text-base font-semibold text-black mb-3">
+                        {relProduct.price.toFixed(2)} <span className="text-xs font-normal text-black/40">DH</span>
                       </p>
-
-                      <div className="flex items-center gap-1 mb-3">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={14}
-                            className={
-                              i < Math.floor(relProduct.rating)
-                                ? 'fill-accent text-accent'
-                                : 'text-muted-foreground'
-                            }
-                          />
-                        ))}
-                        <span className="text-xs text-muted-foreground ml-1">
-                          ({relProduct.reviews})
-                        </span>
-                      </div>
-
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.preventDefault()
                           addItem(relProduct, 1)
                         }}
-                        className="w-full py-2 px-3 bg-accent hover:bg-accent/90 text-accent-foreground rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-1"
+                        className="w-full py-2 border border-black text-black hover:bg-black hover:text-white transition-all duration-300 text-xs uppercase tracking-widest flex items-center justify-center gap-2"
                       >
-                        <ShoppingCart size={14} />
-                        <span className="hidden sm:inline text-xs">Ajouter</span>
+                        <ShoppingCart size={12} />
+                        Ajouter
                       </button>
                     </div>
                   </div>
@@ -355,30 +339,39 @@ export default function ProductDetailPage({ params }: PageProps) {
         )}
 
         {/* Reviews Section */}
-        <div className="mt-16 pt-8 border-t border-border">
-          <h2 className="text-3xl font-serif font-semibold mb-8">Avis clients</h2>
-          <div className="space-y-6">
+        <div className="border-t border-black/10 pt-16">
+          <div className="mb-10">
+            <p className="text-xs uppercase tracking-[0.3em] text-black/40 mb-2">Témoignages</p>
+            <h2 className="text-3xl font-serif text-black">Avis clients</h2>
+            <div className="w-16 h-px bg-black mt-6" />
+          </div>
+
+          <div className="space-y-4">
             {[1, 2, 3].map((idx) => (
-              <div key={idx} className="bg-card rounded-lg p-6 border border-border">
+              <div key={idx} className="bg-white border border-black/8 p-6">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-sm font-semibold text-accent">
+                  <div className="w-10 h-10 border border-black/20 flex items-center justify-center text-xs font-semibold text-black/40 flex-shrink-0">
                     SM
                   </div>
-                  <div className="flex-1">
-                    <p className="font-semibold">Sophie Martin</p>
-                    <p className="text-xs text-muted-foreground">Achat vérifié</p>
+                  <div>
+                    <p className="text-sm font-medium text-black tracking-wide">Sophie Martin</p>
+                    <p className="text-xs uppercase tracking-[0.15em] text-black/30">Achat vérifié</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 mb-2">
+                <div className="flex items-center gap-0.5 mb-3">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className="fill-accent text-accent" />
+                    <Star key={i} size={12} className="fill-black/70 text-black/70" />
                   ))}
                 </div>
-                <p className="text-muted-foreground">Produit exceptionnel et livraison très rapide. Je suis ravie de la qualité!</p>
+                <div className="w-8 h-px bg-black/20 mb-3" />
+                <p className="text-sm text-black/50 leading-relaxed tracking-wide">
+                  Produit exceptionnel et livraison très rapide. Je suis ravie de la qualité!
+                </p>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </div>
   )

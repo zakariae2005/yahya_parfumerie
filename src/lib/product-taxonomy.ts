@@ -2,7 +2,7 @@
 // Single source of truth for categories, subcategories, mega-categories, and per-category brands
 
 export const CATEGORIES = [
-  'PARFUM',
+  'PARFUMS',
   'MAQUILLAGE',
   'CHEVEUX',
   'SOIN DE VISAGE',
@@ -15,7 +15,7 @@ export type Category = (typeof CATEGORIES)[number]
 
 // ─── Subcategories per category ───────────────────────────────────────────────
 export const SUBCATEGORIES: Record<string, string[]> = {
-  'PARFUM': ['Parfum Femme', 'Parfum Homme', 'Parfum Arabe', 'Les Coffrets'],
+  'PARFUMS': ['Parfums Femme', 'Parfums Homme', 'Parfums Arabe', 'Les Coffrets'],
   'MAQUILLAGE': ['Teint', 'Yeux', 'Sourcils', 'Lèvres', 'Ongles', 'Palette Maquillage', 'Pinceau & Accessoires'],
   'CHEVEUX': ['Soins Cheveux', 'Type de Cheveux', 'Coloration', 'Coloration sans ammoniaque'],
   'SOIN DE VISAGE': ['Type de Soin', 'Nettoyant & Démaquillant', 'Type de Peau', 'Soin Anti-Âge'],
@@ -27,9 +27,9 @@ export const SUBCATEGORIES: Record<string, string[]> = {
 // ─── Mega-categories (3rd level) per subcategory ─────────────────────────────
 export const MEGACATEGORIES: Record<string, string[]> = {
   // PARFUM
-  'Parfum Femme':  ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'],
-  'Parfum Homme':  ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'],
-  'Parfum Arabe':  [],
+  'Parfums Femme':  ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'],
+  'Parfums Homme':  ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'],
+  'Parfums Arabe':  [],
   'Les Coffrets':  ['Femme', 'Homme'],
 
   // MAQUILLAGE
@@ -71,7 +71,7 @@ export const MEGACATEGORIES: Record<string, string[]> = {
 
 // ─── Brands per category ──────────────────────────────────────────────────────
 export const BRANDS_BY_CATEGORY: Record<string, string[]> = {
-  'PARFUM': [
+  'PARFUMS': [
     'BOSS', 'DIOR', 'DOLCE & GABBANA', 'ELIE SAAB', 'GIORGIO ARMANI',
     'GIVENCHY', 'HERMÈS', 'JEAN PAUL GAULTIER', 'LANCÔME', 'VALENTINO',
     'YVES SAINT LAURENT', 'SAPHIR', 'MONT BLANC', 'PRADA', 'VERSACE', 'CAROLINA HERRERA', 

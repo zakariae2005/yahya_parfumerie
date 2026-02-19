@@ -11,7 +11,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <LanguageProvider>
       <Header />
-      <main className="pt-16 md:pt-32">
+      <main>
         {children}
       </main>
       <Footer />

@@ -32,7 +32,7 @@ ${itemsList}
 export function generateWhatsAppLink(
   items: CartItem[],
   total: number,
-  businessPhone: string = '212655984300' // Your WhatsApp number
+  businessPhone: string = '212774408828' // Your WhatsApp number
 ): string {
   const message = generateWhatsAppMessage(items, total)
   const encodedMessage = encodeURIComponent(message)
@@ -56,8 +56,6 @@ export function generateSingleProductWhatsAppMessage(
 ━━━━━━━━━━━━━━━━━━━━
 *TOTAL: ${total.toFixed(2)} DH*
 ━━━━━━━━━━━━━━━━━━━━
-
-📦 Livraison gratuite
 🎁 Merci pour votre confiance!
 `.trim()
 
@@ -67,7 +65,7 @@ export function generateSingleProductWhatsAppMessage(
 export function generateSingleProductWhatsAppLink(
   product: Product,
   quantity: number = 1,
-  businessPhone: string = '212655984300'
+  businessPhone: string = '2120774408828'
 ): string {
   const message = generateSingleProductWhatsAppMessage(product, quantity)
   const encodedMessage = encodeURIComponent(message)

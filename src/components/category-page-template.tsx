@@ -4,27 +4,32 @@ import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { useProductStore } from '@/store/productStore'
 import { ProductCard } from '@/components/product-card'
+import { BRANDS_BY_CATEGORY } from '@/lib/product-taxonomy'
 
-const BRANDS = ['Dior', 'Chanel', "L'Oréal", 'Estée Lauder', 'MAC', 'Lancôme', 'Clinique']
 
 interface CategoryPageTemplateProps {
   category: string
   title: string
   description: string
   placeholder: string
+  subcategories?: string[]
 }
 
-export function CategoryPageTemplate({ category, title, description, placeholder }: CategoryPageTemplateProps) {
+export function CategoryPageTemplate({ category, title, description, placeholder, subcategories = [] }: CategoryPageTemplateProps) {
   const { products, fetchProducts, loading } = useProductStore()
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('popularity')
+
+  const brands = BRANDS_BY_CATEGORY[category] ?? []
 
   useEffect(() => { fetchProducts() }, [fetchProducts])
 
   const filteredProducts = products.filter((product) => {
     if (product.category !== category) return false
     if (selectedBrands.length > 0 && product.brand && !selectedBrands.includes(product.brand)) return false
+    if (selectedSubcategory && product.subcategory !== selectedSubcategory) return false
     if (searchTerm) {
       const search = searchTerm.toLowerCase()
       return (
@@ -54,10 +59,11 @@ export function CategoryPageTemplate({ category, title, description, placeholder
 
   const clearFilters = () => {
     setSelectedBrands([])
+    setSelectedSubcategory('')
     setSearchTerm('')
   }
 
-  const hasActiveFilters = selectedBrands.length > 0
+  const hasActiveFilters = selectedBrands.length > 0 || !!selectedSubcategory
 
   return (
     <div className="min-h-screen bg-[#f5f5f3]">
@@ -87,7 +93,7 @@ export function CategoryPageTemplate({ category, title, description, placeholder
 
           {/* Filters Sidebar */}
           <aside className="md:col-span-1">
-            <div className="bg-white border border-black/8 p-6 sticky top-28">
+            <div className="bg-white border border-black/8 p-6 sticky top-14">
 
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-serif text-lg text-black">Filtres</h2>
@@ -103,32 +109,69 @@ export function CategoryPageTemplate({ category, title, description, placeholder
 
               <div className="w-full h-px bg-black/8 mb-6" />
 
-              {/* Brand Filter */}
-              <div>
-                <h3 className="text-xs uppercase tracking-[0.2em] text-black/40 mb-4">Marques</h3>
-                <div className="space-y-1">
-                  {BRANDS.map((brand) => (
-                    <label
-                      key={brand}
-                      className="flex items-center gap-2 cursor-pointer hover:bg-black/5 px-2 py-1.5 transition-colors"
+              {/* Subcategory Filter */}
+              {subcategories.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-xs uppercase tracking-[0.2em] text-black/40 mb-4">Type</h3>
+                  <div className="space-y-1">
+                    <button
+                      onClick={() => setSelectedSubcategory('')}
+                      className={`w-full text-left px-3 py-2 text-xs uppercase tracking-[0.15em] transition-colors duration-200 ${
+                        selectedSubcategory === '' ? 'bg-black text-white' : 'text-black/60 hover:bg-black/5'
+                      }`}
                     >
-                      <input
-                        type="checkbox"
-                        checked={selectedBrands.includes(brand)}
-                        onChange={() => toggleBrand(brand)}
-                        className="w-3.5 h-3.5 border-black/20 accent-black"
-                      />
-                      <span className="text-xs tracking-wide text-black/60">{brand}</span>
-                    </label>
-                  ))}
+                      Tous
+                    </button>
+                    {subcategories.map((sub) => (
+                      <button
+                        key={sub}
+                        onClick={() => setSelectedSubcategory(sub)}
+                        className={`w-full text-left px-3 py-2 text-xs uppercase tracking-[0.15em] transition-colors duration-200 ${
+                          selectedSubcategory === sub ? 'bg-black text-white' : 'text-black/60 hover:bg-black/5'
+                        }`}
+                      >
+                        {sub}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="w-full h-px bg-black/8 mt-6 mb-6" />
                 </div>
-              </div>
+              )}
+
+              {/* Brand Filter */}
+              {brands.length > 0 && (
+                <div>
+                  <h3 className="text-xs uppercase tracking-[0.2em] text-black/40 mb-4">Marques</h3>
+                  <div className="space-y-1">
+                    {brands.map((brand) => (
+                      <label
+                        key={brand}
+                        className="flex items-center gap-2 cursor-pointer hover:bg-black/5 px-2 py-1.5 transition-colors"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedBrands.includes(brand)}
+                          onChange={() => toggleBrand(brand)}
+                          className="w-3.5 h-3.5 border-black/20 accent-black"
+                        />
+                        <span className="text-xs tracking-wide text-black/60">{brand}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Active Filters */}
               {hasActiveFilters && (
                 <div className="mt-6 pt-6 border-t border-black/8">
                   <h3 className="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Filtres actifs</h3>
                   <div className="space-y-2">
+                    {selectedSubcategory && (
+                      <div className="flex items-center justify-between text-xs bg-black text-white px-3 py-1.5">
+                        <span className="uppercase tracking-wider">{selectedSubcategory}</span>
+                        <button onClick={() => setSelectedSubcategory('')} className="hover:opacity-60 ml-2">×</button>
+                      </div>
+                    )}
                     {selectedBrands.map((brand) => (
                       <div key={brand} className="flex items-center justify-between text-xs border border-black/20 text-black/60 px-3 py-1.5">
                         <span className="tracking-wide">{brand}</span>

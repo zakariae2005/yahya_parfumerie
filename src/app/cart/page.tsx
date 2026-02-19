@@ -13,12 +13,15 @@ export default function CartPage() {
   const { items, removeItem, updateQuantity, clearCart } = useCartStore()
   const total = useCartTotal()
 
+  const deliveryCost = total >= 500 ? 0 : 10
+  const grandTotal = total + deliveryCost 
+
   const handleWhatsAppCheckout = () => {
     if (items.length === 0) {
       alert('Votre panier est vide')
       return
     }
-    const whatsappLink = generateWhatsAppLink(items, total)
+    const whatsappLink = generateWhatsAppLink(items, grandTotal)
     window.open(whatsappLink, '_blank')
   }
 
@@ -172,7 +175,11 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs uppercase tracking-[0.15em] text-black/40">Livraison</span>
-                  <span className="text-xs uppercase tracking-wider text-black/60">Gratuite</span>
+                  {deliveryCost === 0 ? (
+                    <span className="text-xs uppercase tracking-wider text-black/60">Gratuite</span>
+                  ) : (
+                    <span className="text-sm font-medium text-black">10.00 DH</span>
+                  )}
                 </div>
               </div>
 
@@ -182,7 +189,7 @@ export default function CartPage() {
               <div className="flex justify-between items-center mb-8">
                 <span className="font-serif text-lg text-black">Total</span>
                 <span className="font-serif text-2xl font-semibold text-black">
-                  {total.toFixed(2)} <span className="text-sm font-normal text-black/40">DH</span>
+                  {grandTotal.toFixed(2)} <span className="text-sm font-normal text-black/40">DH</span>
                 </span>
               </div>
 

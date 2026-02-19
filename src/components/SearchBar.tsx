@@ -70,11 +70,11 @@ export function SearchBar() {
   }
 
   return (
-    <div ref={searchRef} className="relative w-full max-w-sm">
+    <div ref={searchRef} className="relative w-full max-w-[200px]">
       {/* Search Input */}
       <div className="relative">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-          <Search size={18} />
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-black/40">
+          <Search size={15} />
         </div>
         <input
           ref={inputRef}
@@ -85,23 +85,23 @@ export function SearchBar() {
             if (suggestions.length > 0) setIsOpen(true)
           }}
           placeholder={t('search') || 'Recherche'}
-          className="w-full pl-10 pr-10 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-sm"
+          className="w-full pl-8 pr-8 py-1.5 bg-white border border-black/10 focus:border-black/30 focus:outline-none text-xs text-black placeholder:text-black/30 tracking-wide transition-colors duration-200 rounded-lg"
         />
         {searchQuery && (
           <button
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-foreground transition-colors"
           >
-            <X size={16} />
+            <X size={13} />
           </button>
         )}
       </div>
 
       {/* Suggestions Dropdown */}
       {isOpen && (suggestions.length > 0 || isLoading) && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-black/10 shadow-lg max-h-96 overflow-y-auto z-[100]">
           {isLoading ? (
-            <div className="p-4 text-center text-sm text-muted-foreground">
+            <div className="p-4 text-center text-sm text-black/40">
               Chargement...
             </div>
           ) : suggestions.length > 0 ? (
@@ -111,7 +111,7 @@ export function SearchBar() {
                   <Link
                     href={`/products/${product.id}`}
                     onClick={handleSelectProduct}
-                    className="flex items-center gap-3 p-3 hover:bg-primary transition-colors border-b border-border last:border-b-0"
+                    className="flex items-center gap-3 p-3 hover:bg-black/5 transition-colors border-b border-black/8 last:border-b-0"
                   >
                     {/* Product Image */}
                     {product.images && product.images.length > 0 ? (
@@ -121,8 +121,8 @@ export function SearchBar() {
                         className="w-12 h-12 object-cover rounded"
                       />
                     ) : (
-                      <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
-                        <Search size={20} className="text-muted-foreground" />
+                      <div className="w-12 h-12 bg-black/5 flex items-center justify-center">
+                        <Search size={20} className="text-black/40" />
                       </div>
                     )}
 
@@ -132,23 +132,21 @@ export function SearchBar() {
                         {product.name}
                       </div>
                       {product.brand && (
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-black/40">
                           {product.brand}
                         </div>
                       )}
                     </div>
 
-                    {/* Price */}
-                    <div className="text-sm font-semibold text-accent">
-                      {product.price.toFixed(2)} {'DH'}
-                    </div>
+                    
+                    
                   </Link>
                 </li>
               ))}
             </ul>
           ) : (
-            <div className="p-4 text-center text-sm text-muted-foreground">
-              'Aucun résultat trouvé
+            <div className="p-4 text-center text-sm text-black/40">
+              Aucun résultat trouvé
             </div>
           )}
         </div>

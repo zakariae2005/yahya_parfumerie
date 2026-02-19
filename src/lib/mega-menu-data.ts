@@ -5,9 +5,9 @@ export type MenuSection = {
 
 export const megaMenuData: Record<string, MenuSection[]> = {
   '/parfums': [
-    { title: 'Parfum Femme', items: ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'] },
-    { title: 'Parfum Homme', items: ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'] },
-    { title: 'Parfum Arabe', items: [] },
+    { title: 'Parfums Femme', items: ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'] },
+    { title: 'Parfums Homme', items: ['Eau de Toilette', 'Eau de Parfum', 'Le Parfum'] },
+    { title: 'Parfums Arabe', items: [] },
     { title: 'Les Coffrets', items: ['Femme', 'Homme'] },
   ],
   '/maquillage': [

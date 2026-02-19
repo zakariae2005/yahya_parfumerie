@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { ShoppingCart, Star, MessageCircle } from 'lucide-react'
 import { Product } from '@/types/product'
 import { useCartStore } from '@/store/cartStore'
-import { generateSingleProductWhatsAppLink } from '@/lib/whatsapp'
+import { useRouter } from 'next/navigation'
 
 interface ProductCardProps {
   product: Product
@@ -15,6 +15,14 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCartStore()
   const [isAdded, setIsAdded] = useState(false)
+  const router = useRouter()
+
+  const handleOrderNow = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    addItem(product, 1)
+    router.push('/cart')
+  }
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -24,12 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
     setTimeout(() => setIsAdded(false), 2000)
   }
 
-  const handleShopNow = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    const whatsappLink = generateSingleProductWhatsAppLink(product, 1)
-    window.open(whatsappLink, '_blank')
-  }
+ 
 
   return (
     <div className="group bg-white overflow-hidden border border-black/8 hover:border-black/20 hover:shadow-lg transition-all duration-500">
@@ -105,13 +108,13 @@ export function ProductCard({ product }: ProductCardProps) {
           </button>
 
           {/* WhatsApp Button */}
-          <button
-            onClick={handleShopNow}
-            className="w-full py-2.5 px-4 rounded-none bg-black text-white text-xs font-medium uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 hover:bg-black/80 border border-black"
-          >
-            <MessageCircle size={14} />
-            <span>Commander maintenant</span>
-          </button>
+         <button
+          onClick={handleOrderNow}
+          className="w-full py-2.5 px-4 rounded-none bg-black text-white text-xs font-medium uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 hover:bg-black/80 border border-black"
+        >
+          <ShoppingCart size={14} />
+          <span>Commander maintenant</span>
+        </button>
         </div>
       </div>
     </div>

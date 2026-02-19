@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Facebook, Instagram, Phone, Mail, Clock, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import Image from 'next/image'
 
 export function Footer() {
   const footerRef = useRef<HTMLDivElement>(null)
@@ -50,21 +51,25 @@ export function Footer() {
       <div className="absolute top-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-6   relative z-10">
         {/* Logo Section */}
-        <div
-          className={`text-center mb-12 transition-all duration-1000 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          <Link href="/" className="inline-block">
-            <div className="text-4xl md:text-5xl font-serif font-semibold text-white tracking-widest">
-              YAHYA
-            </div>
-            <div className="text-sm text-accent font-light tracking-[0.3em]">
-              PARFUMERIE
-            </div>
-          </Link>
+       <div
+  className={`flex justify-center transition-all duration-1000 ease-out ${
+    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+  }`}
+>
+
+           <Link href="/" className="relative h-36 md:h-48 w-56 md:w-72">
+    <div className="relative w-full h-full">
+      <Image
+        src="/images/logorem.png"
+        alt="Yahya Parfumerie"
+        fill
+        className="object-contain"
+        priority
+      />
+    </div>
+  </Link>
         </div>
 
         {/* Main Footer Content */}

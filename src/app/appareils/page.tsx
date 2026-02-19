@@ -10,6 +10,7 @@ export default function AppareilsPage() {
       title="Appareils Électriques"
       description="Découvrez nos appareils de beauté"
       placeholder="Rechercher des appareils..."
+      subcategories={['Sèche-cheveux', 'Lisseur', 'Boucleur', 'Brosse soufflante', 'Épilateur', 'Rasoir']}
     />
   )
 }
