@@ -71,7 +71,7 @@ export const MEGACATEGORIES: Record<string, string[]> = {
 
 // ─── Brands per category ──────────────────────────────────────────────────────
 export const BRANDS_BY_CATEGORY: Record<string, string[]> = {
-  'PARFUMS': [
+  'PARFUM': [
     'BOSS', 'DIOR', 'DOLCE & GABBANA', 'ELIE SAAB', 'GIORGIO ARMANI',
     'GIVENCHY', 'HERMÈS', 'JEAN PAUL GAULTIER', 'LANCÔME', 'VALENTINO',
     'YVES SAINT LAURENT', 'SAPHIR', 'MONT BLANC', 'PRADA', 'VERSACE', 'CAROLINA HERRERA', 
